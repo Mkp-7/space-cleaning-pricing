@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+streamlit_log.txt
+
+# Note: pricing_data.db is intentionally NOT ignored here.
+# On Streamlit Community Cloud the filesystem is ephemeral / resets on
+# redeploy, so if you want data to persist across deploys you have two options:
+#   1. Commit pricing_data.db to the repo (fine for a small internal tool,
+#      but everyone will need to `git pull` to see teammates' latest edits —
+#      not real-time shared).
+#   2. Switch to a hosted DB (see README "Scaling to real multi-user sharing").
+# For a true shared, always-up-to-date experience, option 2 is recommended.
