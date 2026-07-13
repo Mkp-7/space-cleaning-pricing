@@ -1,6 +1,6 @@
 """
 Database layer for the Pricing & Revenue Management Platform.
-SQLite for simplicity — works out of the box locally and on Streamlit Cloud.
+SQLite for simplicity - works out of the box locally and on Streamlit Cloud.
 Swap get_connection() to point at Postgres (Supabase/Neon) for real
 multi-user persistence; nothing else in the app needs to change.
 """
