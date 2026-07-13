@@ -2,7 +2,7 @@
 Optional one-time seed script. Run with `python seed_data.py`.
 Pre-populates services (from njspacecleaning.com) with realistic pricing
 units matched to how cleaning companies actually charge, and the
-competitors identified so far. Rates are left blank (None) — fill them in
+competitors identified so far. Rates are left blank (None) - fill them in
 via the app as you gather real numbers.
 """
 
