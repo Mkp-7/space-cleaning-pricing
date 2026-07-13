@@ -89,11 +89,12 @@ if page == "📊 Dashboard":
         if not completed.empty:
             by_service = completed.groupby("service_name")["price_charged"].sum()
             if not by_service.empty:
-                import matplotlib.pyplot as plt
-                fig, ax = plt.subplots()
-                ax.pie(by_service.values, labels=by_service.index, autopct="%1.0f%%", startangle=90)
-                ax.axis("equal")
-                st.pyplot(fig)
+                import plotly.express as px
+                pie_df = by_service.reset_index()
+                pie_df.columns = ["Service", "Revenue"]
+                fig = px.pie(pie_df, names="Service", values="Revenue", hole=0.3)
+                fig.update_traces(textinfo="percent+label")
+                st.plotly_chart(fig, width="stretch")
             else:
                 st.caption("No completed jobs yet.")
         else:
@@ -296,7 +297,7 @@ elif page == "📈 Revenue Forecast":
         chart_data["Target"] = target
     st.line_chart(chart_data)
 
-    st.dataframe(proj, use_container_width=True, hide_index=True,
+    st.dataframe(proj, width="stretch", hide_index=True,
                  column_config={
                      "Projected Revenue": st.column_config.NumberColumn(format="$%.2f"),
                      "Target": st.column_config.NumberColumn(format="$%.2f"),
@@ -359,14 +360,15 @@ elif page == "🔧 Job Calculator":
     with col1:
         st.subheader("Cost vs Margin breakdown")
         if quoted_price > 0:
-            import matplotlib.pyplot as plt
-            fig, ax = plt.subplots()
             values = [max(total_cost, 0), max(margin, 0)]
             labels = ["Cost", "Margin"]
             if sum(values) > 0:
-                ax.pie(values, labels=labels, autopct="%1.0f%%", startangle=90, colors=["#e07a5f", "#81b29a"])
-                ax.axis("equal")
-                st.pyplot(fig)
+                import plotly.express as px
+                pie_df = pd.DataFrame({"Label": labels, "Amount": values})
+                fig = px.pie(pie_df, names="Label", values="Amount", hole=0.3,
+                             color="Label", color_discrete_map={"Cost": "#e07a5f", "Margin": "#81b29a"})
+                fig.update_traces(textinfo="percent+label")
+                st.plotly_chart(fig, width="stretch")
         else:
             st.caption("Enter a quoted price to see the breakdown.")
 
@@ -468,7 +470,7 @@ elif page == "💼 Job Tracker":
 
     st.dataframe(
         filtered[["client_name", "service_name", "employee_name", "job_date", "price_charged", "total_cost", "margin", "status", "notes"]],
-        use_container_width=True, hide_index=True,
+        width="stretch", hide_index=True,
         column_config={
             "price_charged": st.column_config.NumberColumn("Price", format="$%.2f"),
             "total_cost": st.column_config.NumberColumn("Cost", format="$%.2f"),
@@ -559,4 +561,4 @@ elif page == "📤 Export":
 
     st.markdown("---")
     st.subheader("Preview: Pricing Summary")
-    st.dataframe(summary_df, use_container_width=True, hide_index=True)
+    st.dataframe(summary_df, width="stretch", hide_index=True)
