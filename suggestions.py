@@ -59,7 +59,7 @@ def evaluate_service(our_rate, stats, suggested):
         return "high-outlier", "🔴", f"Priced above every tracked competitor (max ${stats['max']:.2f})."
 
     if our_rate < stats["min"]:
-        return "low-outlier", "🔴", f"Priced below every tracked competitor (min ${stats['min']:.2f}) — check margin."
+        return "low-outlier", "🔴", f"Priced below every tracked competitor (min ${stats['min']:.2f}) - check margin."
 
     if suggested is not None:
         diff_pct = abs(our_rate - suggested) / suggested * 100 if suggested else 0
